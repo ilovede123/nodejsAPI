@@ -1,0 +1,71 @@
+<meta charset="utf-8">
+
+<button id="btn">发送请求</button>
+
+<!-- <script>
+    btn.onclick = function () {
+        //与jq有神马区别 fetch是es6中原生语法 不需要引入任何第三方库,采用promise语法,解决回调地狱
+        fetch("http://localhost:3000/users/getAllUsers?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxidzUiLCJ1bmlkIjoiOG90bnpkNWZ2MjIiLCJpYXQiOjE1OTM0MTE4MTgsImV4cCI6MTU5MzQxMTg3OH0.RjJOgcd48ZJxtDwhIgLVre5OplMaedevVRwRgRXkEkY")
+            .then(body => body.json())//第一次.then得到的是响应体,是个数据流,需要调用json方法
+            .then(res => {
+                console.log(res)
+            })
+    }
+</script> -->
+<script>
+    //jsonp请求的回调函数
+    function callback(res) {
+        console.log(res)
+    }
+
+    btn.onclick = function () {
+        let isScriptExist = document.getElementById("jsonp");
+        if (isScriptExist) {
+            document.documentElement.removeChild(isScriptExist)
+        }
+        //jsonp原理:动态创建script标签,然后通过script标签的src属性请求后台接口,并且传递回调函数给后台,后台会响应回调结果
+        let script = document.createElement("script")
+        script.src = "http://localhost:3000/jsonp?cb=callback"
+        script.id = "jsonp"
+        document.documentElement.appendChild(script)
+    }
+
+
+    // setTimeout(function () {
+    //     console.log(123)
+    // })
+
+    // new Promise(function (resolve, reject) {
+    //     console.log(999)
+    //     resolve(456)
+    // })
+    //     .then(function (res) {
+    //         console.log(res)
+    //     })
+
+    async function async1() {
+        await async2()
+        console.log("async1 end")
+    }
+    async function async2() {
+        console.log("async2 end")
+    }
+
+    async1()
+
+    setTimeout(() => {
+        console.log('timeout')
+    })
+
+    new Promise((resolve, reject) => {
+        console.log('promise')
+        resolve()
+    })
+        .then(() => {
+            console.log('promise1')
+        })
+        .then(() => {
+            console.log('promise2')
+        })
+        //promise=> async2 end =>async1 end=> promise1=>promise2=>timeout
+</script>

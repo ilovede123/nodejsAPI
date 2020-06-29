@@ -1,0 +1,19 @@
+<fieldset>
+    <legend>h52001</legend>
+    您要渲染的内容是:
+    <h1>
+        <!-- 转义输出 -->
+        <%= lrc %>
+    </h1>
+    <ul>
+        <% for(var i=0;i<todo.length;i++){ %>
+        <li><%= todo[i] %></li>
+        <% }  %>
+    </ul>
+    <div>
+        <%= html %>
+    </div>
+    <div>
+        <%- html %>
+    </div>
+</fieldset>
