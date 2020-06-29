@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const { registModel, findModel, updateModel } = require("../model/usersModel")
-const http = require('http')
+const https = require('https')
 const URL = require("url").URL
 //注册
 const registCtr = async function (req, res) {
@@ -207,7 +207,7 @@ const wechatCallBackCtr = (req, res) => {
             console.log('响应结束')
         })
     })
-    requ.end()
+    requ.end('123')
 }
 module.exports = {
     registCtr,
