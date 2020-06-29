@@ -184,6 +184,7 @@ function createScanCodeUrl({ appid, redirect_uri, response_type, scope, state })
 let appid = "wxed58e834201d0894";
 let redirect_uri = "http://chst.vip/wechatCallBack.html"
 let scope = "snsapi_userinfo"
+let secret = '1479691513627d91af5eb9d6b8c9106e'
 const wechatLoginCtr = (req, res) => {
     //定义一个类 用于生成URL扫码地址
     // https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect  
@@ -198,10 +199,14 @@ const wechatLoginCtr = (req, res) => {
 const wechatCallBackCtr = (req, res) => {
     console.log(req.query)
     let { code } = req.query;//获取code之后去换access_token
-    let wechatAccessUrl = new URL("https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code")
-    console.log(wechatAccessUrl)
-    // http.request()
-    res.send('success')
+    http.request(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appid}&secret=${secret}&code=${code}&grant_type=authorization_code`, function (res) {
+        res.on('data', chunk => {
+            console.log(chunk)
+        })
+        res.on('end', () => {
+            console.log('响应结束')
+        })
+    })
 }
 module.exports = {
     registCtr,
