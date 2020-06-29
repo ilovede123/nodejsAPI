@@ -7,7 +7,7 @@ const filter = (param) => (req, res, next) => {
     // console.log(req.session)
     //拦截请求,进行token校验
     //登入和注册不需要校验token
-    if (req.path === "/users/login" || req.path === "/users/regist" || req.path==="/users/wechatLogin") {
+    if (req.path === "/users/login" || req.path === "/users/regist" || req.path === "/users/wechatLogin" || req.path === "/users/wechatCallBack") {
         next()
     } else {
         //开始校验jwt

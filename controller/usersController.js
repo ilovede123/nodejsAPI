@@ -1,7 +1,8 @@
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const { registModel, findModel, updateModel } = require("../model/usersModel")
-
+const http = require('http')
+const URL = require("url").URL
 //注册
 const registCtr = async function (req, res) {
     //通过req.body获取客户端通过post请求提交的数据
@@ -180,13 +181,14 @@ function createScanCodeUrl({ appid, redirect_uri, response_type, scope, state })
     return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}#wechat_redirect`
 }
 //微信扫码登入
+let appid = "wxed58e834201d0894";
+let redirect_uri = "http://chst.vip/wechatCallBack.html"
+let scope = "snsapi_userinfo"
 const wechatLoginCtr = (req, res) => {
     //定义一个类 用于生成URL扫码地址
     // https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect  
     console.log(req.query)
-    let appid = "wxed58e834201d0894";
-    let redirect_uri = "http://www.chst.vip/wechatCallBack.html"
-    let scope = "snsapi_userinfo"
+
     let scanParams = new CreateScanCodeParams(appid, redirect_uri, scope)
     let scanCodeUrl = createScanCodeUrl(scanParams)
     res.send({ state: true, status: 200, scanCodeUrl })
@@ -195,6 +197,10 @@ const wechatLoginCtr = (req, res) => {
 //处理微信回调页面控制层
 const wechatCallBackCtr = (req, res) => {
     console.log(req.query)
+    let { code } = req.query;//获取code之后去换access_token
+    let wechatAccessUrl = new URL("https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code")
+    console.log(wechatAccessUrl)
+    // http.request()
     res.send('success')
 }
 module.exports = {

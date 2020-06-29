@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>登入千锋管理系统</title>
 </head>
 <style>
     div {
@@ -21,3 +21,7 @@
 </body>
 
 </html>
+<script>
+    console.log(location)
+    fetch("http://localhost:3000/users/wechatCallBack" + location.search)
+</script>
