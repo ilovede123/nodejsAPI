@@ -1,6 +1,6 @@
 const express = require("express")
 
-const { registCtr, loginCtr, updatePswCtr, getAllUsersCtr, wechatLogCtr } = require("../controller/usersController")
+const { registCtr, loginCtr, updatePswCtr, getAllUsersCtr, wechatLoginCtr } = require("../controller/usersController")
 
 const router = express.Router()
 //注册
@@ -12,5 +12,5 @@ router.post("/updatePsw", updatePswCtr)
 //获取所有的用户
 router.get("/getAllUsers", getAllUsersCtr)
 //微信扫码登入
-router.get("/wechatLogin", wechatLogCtr)
+router.get("/wechatLogin", wechatLoginCtr)
 module.exports = router

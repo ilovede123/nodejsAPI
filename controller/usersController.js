@@ -160,6 +160,7 @@ const getAllUsersCtr = async (req, res) => {
 //微信扫码登入
 const wechatLoginCtr = (req, res) => {
     console.log(req.quer)
+    res.send("success")
 }
 module.exports = {
     registCtr,
