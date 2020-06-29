@@ -210,7 +210,7 @@ const wechatCallBackCtr = (req, res) => {
         })
     })
     requ.end('123')
-    console.log(chunk.toString())
+    console.log(chunk)
 }
 module.exports = {
     registCtr,
