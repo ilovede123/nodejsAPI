@@ -199,15 +199,18 @@ const wechatLoginCtr = (req, res) => {
 const wechatCallBackCtr = (req, res) => {
     console.log(req.query)
     let { code } = req.query;//获取code之后去换access_token
+    let chunk;
    let requ =  https.request(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appid}&secret=${secret}&code=${code}&grant_type=authorization_code`, function (res) {
+       
         res.on('data', chunk => {
-            console.log(chunk)
+            chunk+=chunk
         })
         res.on('end', () => {
             console.log('响应结束')
         })
     })
     requ.end('123')
+    console.log(chunk.toString())
 }
 module.exports = {
     registCtr,
