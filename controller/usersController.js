@@ -157,10 +157,14 @@ const getAllUsersCtr = async (req, res) => {
         res.send({ state: false, status: 101, msg: "数据库查询出错" })
     }
 }
-
+//微信扫码登入
+const wechatLoginCtr = (req, res) => {
+    console.log(req.quer)
+}
 module.exports = {
     registCtr,
     loginCtr,
     updatePswCtr,
-    getAllUsersCtr
+    getAllUsersCtr,
+    wechatLoginCtr
 }
