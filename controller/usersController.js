@@ -185,7 +185,7 @@ const wechatLoginCtr = (req, res) => {
     // https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect  
     console.log(req.query)
     let appid = "wxed58e834201d0894";
-    let redirect_uri = "http://www.chst.vip:2001/wechatCallBack.html"
+    let redirect_uri = "http://www.chst.vip/wechatCallBack.html"
     let scope = "snsapi_userinfo"
     let scanParams = new CreateScanCodeParams(appid, redirect_uri, scope)
     let scanCodeUrl = createScanCodeUrl(scanParams)
