@@ -157,15 +157,51 @@ const getAllUsersCtr = async (req, res) => {
         res.send({ state: false, status: 101, msg: "数据库查询出错" })
     }
 }
+//定义一个 用于生成微信扫参数对象
+class CreateScanCodeParams {
+    /**
+     * 
+     * @param {String} appid 公众号的唯一标识
+     * @param {String} redirect_uri 授权后重定向的回调链接地址， 请使用 urlEncode 对链接进行处理
+     * @param {String} response_type 返回类型，请填写code
+     * @param {String} scope 应用授权作用域，snsapi_base （不弹出授权页面，直接跳转，只能获取用户openid），snsapi_userinfo （弹出授权页面，可通过openid拿到昵称、性别、所在地。并且， 即使在未关注的情况下，只要用户授权，也能获取其信息 ）
+     * @param {String} state 重定向后会带上state参数，开发者可以填写a-zA-Z0-9的参数值，最多128字节
+     */
+    constructor(appid = "%", redirect_uri = "%", response_type = "code", scope = "snsapi_base", state = "1730255954") {
+        this.appid = appid;
+        this.redirect_uri = redirect_uri;
+        this.response_type = response_type;
+        this.scope = scope;
+        this.state = state
+    }
+}
+//创建一个方法 生成url
+function createScanCodeUrl({ appid, redirect_uri, response_type, scope, state }) {
+    return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}#wechat_redirect `
+}
 //微信扫码登入
 const wechatLoginCtr = (req, res) => {
-    console.log(req.quer)
-    res.send("success")
+    //定义一个类 用于生成URL扫码地址
+    // https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect  
+    console.log(req.query)
+    let appid = "wxed58e834201d0894";
+    let redirect_uri = "http://www.chst.vip:2001/wechatCallBack.html"
+    let scope = "snsapi_userinfo"
+    let scanParams = new CreateScanCodeParams(appid, redirect_uri, scope)
+    let scanCodeUrl = createScanCodeUrl(scanParams)
+    res.send({ state: true, status: 200, scanCodeUrl })
+}
+
+//处理微信回调页面控制层
+const wechatCallBackCtr = (req, res) => {
+    console.log(req.query)
+    res.send('success')
 }
 module.exports = {
     registCtr,
     loginCtr,
     updatePswCtr,
     getAllUsersCtr,
-    wechatLoginCtr
+    wechatLoginCtr,
+    wechatCallBackCtr
 }
