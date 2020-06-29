@@ -199,7 +199,7 @@ const wechatLoginCtr = (req, res) => {
 const wechatCallBackCtr = (req, res) => {
     console.log(req.query)
     let { code } = req.query;//获取code之后去换access_token
-    http.request(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appid}&secret=${secret}&code=${code}&grant_type=authorization_code`, function (res) {
+   let requ =  https.request(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appid}&secret=${secret}&code=${code}&grant_type=authorization_code`, function (res) {
         res.on('data', chunk => {
             console.log(chunk)
         })
@@ -207,6 +207,7 @@ const wechatCallBackCtr = (req, res) => {
             console.log('响应结束')
         })
     })
+    requ.end()
 }
 module.exports = {
     registCtr,
