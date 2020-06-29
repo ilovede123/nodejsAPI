@@ -200,7 +200,7 @@ const wechatCallBackCtr = (req, res) => {
     console.log(req.query)
     let { code } = req.query;//获取code之后去换access_token
 
-    let requ = https.request(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appid}&secret=${secret}&code=${code}&grant_type=authorization_code`, function (res) {
+    let requ = https.get(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appid}&secret=${secret}&code=${code}&grant_type=authorization_code`, function (res) {
         let datas = [];
         let size = 0;
         res.on('data', data => {
