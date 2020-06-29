@@ -177,7 +177,7 @@ class CreateScanCodeParams {
 }
 //创建一个方法 生成url
 function createScanCodeUrl({ appid, redirect_uri, response_type, scope, state }) {
-    return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}#wechat_redirect `
+    return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=${response_type}&scope=${scope}&state=${state}#wechat_redirect`
 }
 //微信扫码登入
 const wechatLoginCtr = (req, res) => {
