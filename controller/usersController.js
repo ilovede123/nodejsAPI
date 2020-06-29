@@ -207,10 +207,11 @@ const wechatCallBackCtr = (req, res) => {
         })
         res.on('end', () => {
             console.log('响应结束')
+            console.log(chunk)
         })
     })
     requ.end('123')
-    console.log(chunk)
+    
 }
 module.exports = {
     registCtr,
