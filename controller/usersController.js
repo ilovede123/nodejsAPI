@@ -211,7 +211,7 @@ const wechatCallBackCtr = (req, res) => {
             console.log('响应结束')
             var buff = Buffer.concat(datas, size);
             var result = buff.toJSON()
-            
+            console.log(result)
         })
     })
     requ.end('123')
