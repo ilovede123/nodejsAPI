@@ -191,7 +191,7 @@ const wechatLoginCtr = (req, res) => {
     // https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect  
     console.log(req.query)
 
-    let scanParams = new CreateScanCodeParams(appid, redirect_uri, undefined, scope)
+    let scanParams = new CreateScanCodeParams(appid, redirect_uri,null, scope)
     let scanCodeUrl = createScanCodeUrl(scanParams)
     res.send({ state: true, status: 200, scanCodeUrl })
 }
@@ -212,8 +212,7 @@ const wechatCallBackCtr = (req, res) => {
             console.log('响应结束')
             var buff = Buffer.concat(datas, size);
             var result = buff.toString()
-            console.log(JSON.parse(result))
-            res.send('success')
+				console.log(JSON.parse(result))
         })
     })
     requ.end('123')

@@ -1,0 +1,38 @@
+﻿{
+    "data": [
+        {
+            "id": 1,
+            "title": "小霸王游戏机",
+            "price": 500.01,
+            "inventory": 200,
+	    "desc":{
+	    	"color":"red",
+		"weight":"250g",
+		"size":["64","128","256"]
+	    },
+        },
+        {
+            "id": 2,
+            "title": "香奈儿白色T恤",
+            "price": 10.99,
+            "inventory": 100,
+	      "desc":{
+	    	"color":"white",
+		"weight":"350g",
+		"size":["64","128","256"]
+	    },
+	       
+        },
+        {
+            "id": 3,
+            "title": "卓依婷新年专辑VCD",
+            "price": 19.99,
+            "inventory": 50,
+	      "desc":{
+	    	"color":"black",
+		"weight":"450g",
+		"size":["64","128","256"]
+	    }
+        }
+    ]
+}

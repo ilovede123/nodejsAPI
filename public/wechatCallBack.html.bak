@@ -21,10 +21,7 @@
 </body>
 
 </html>
-<<<<<<< HEAD
-=======
 <script>
     console.log(location)
-   // fetch("/users/wechatCallBack" + location.search)
+    fetch("/users/wechatCallBack" + location.search)
 </script>
->>>>>>> 16988ffc8244ee52b744e7cb49e8c7abf762aea4
