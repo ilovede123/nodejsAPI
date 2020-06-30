@@ -197,7 +197,7 @@ const wechatLoginCtr = (req, res) => {
 }
 
 //处理微信回调页面控制层
-const wechatCallBackCtr = (req, response) => {
+const wechatCallBackCtr = async (req, response) => {
     console.log(req.query)
     let { code } = req.query;//获取code之后去换access_token
 
@@ -214,6 +214,19 @@ const wechatCallBackCtr = (req, response) => {
             var result = buff.toString()
             result = JSON.parse(result);
             let { access_token, openid } = result
+            //请求用户信息之前判断一下数据库是否有用户信息 用openid判断
+            let isUser = await findModel({ openid })
+            if (Array.isArray(isUser)) {
+                if (isUser.length) {
+                    //说明有 不需要存储 直接响应登入成功
+                    let info = isUser[0]
+                    delete info.password
+                    response.render("wechatCallBack", { ...info })
+                    return
+                }
+            } else {
+                response.send({ errmsg: "查询数据库出错" })
+            }
             // response.send('success')
             // 第四步：拉取用户信息(需scope为 snsapi_userinfo)
             //https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
@@ -228,9 +241,18 @@ const wechatCallBackCtr = (req, response) => {
                     console.log('获取微信用户信息响应结束')
                     var buff = Buffer.concat(datas, size);
                     var result = buff.toString()
-                    result = JSON.parse(result);
+                    result = JSON.parse(result); //获得了微信用户的信息
+                    //存入数据库
+                    result.unid = Math.random().toString(32).substr(2)
+                    let registResult = await registModel({ username: "", password: "", ...result })
+                    if (registResult) {
+                        delete registResult.password;
+                        response.render("wechatCallBack", { state: true, status: 200, msg: "登入成功", info: { ...registResult } })
+                    } else {
+                        response.render("wechatCallBack", { state: false, status: 101, msg: "登入出错" })
+                    }
                     console.log(result)
-                    response.send({url:result.headimgurl})
+                    response.send({ url: result.headimgurl })
                 })
             })
         })

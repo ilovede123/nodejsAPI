@@ -7,7 +7,14 @@ const usersChema = mongoose.Schema({
     nickname: { type: String, required: false },
     phone: { type: String, required: false },
     email: { type: String, required: false },
-    sex: { type: String, required: false }
+    openid: String,
+    sex: Number,
+    language: String,
+    city: String,
+    province: String,
+    country: String,
+    headimgurl: String,
+    privilege: Array
 })
 
 //创建集合

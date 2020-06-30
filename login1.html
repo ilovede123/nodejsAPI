@@ -8,11 +8,56 @@
 </head>
 
 <body>
-    <img src="data:image/png;http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKL6Uj3HPlcico2jy2GBpKyqBjbWCu
-    icAibQ0BRic2Pu8a1fBUzGH7YB6UOy4Tl1k3iacXrEeLPyzXvs5Q/132" alt="">
+    <fieldset>
+        <legend>防抖</legend>
+        商品:玛莎拉的
+        <button id="btn2">-</button>
+        <input type="text" id="count" value="0" style="width: 20px;">
+        <button id="btn1">+</button>
+    </fieldset>
 </body>
 
 </html>
 <script>
+    var num = 0;
 
+    var timer;
+    function debounce() {
+        //先判断有没有定时器,如果有定时器,那么就清理,只保留最后一个定时器
+        if (timer) {
+            clearTimeout(timer)
+        }
+
+        timer = setTimeout(() => {
+            console.log("最后一次的结果是:" + num)
+            timer = null
+        }, 500)
+    }
+
+    //节流
+    function throttle() {
+        //多次执行,没隔一段时间执行一次
+        //需求:每隔500毫秒执行一次
+        if (!timer) {
+            timer = setTimeout(() => {
+                console.log("当前节流每隔500执行", num)
+                // console.log(timer)
+                timer = null;
+            }, 500)
+        }
+
+    }
+
+    btn1.onclick = function () {
+        num++
+        // console.log(num)
+        count.value = num
+        debounce()
+    }
+
+    btn2.onclick = function () {
+        num--
+        count.value = num
+        throttle()
+    }
 </script>
