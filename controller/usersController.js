@@ -173,7 +173,7 @@ class CreateScanCodeParams {
         this.redirect_uri = redirect_uri;
         this.response_type = response_type;
         this.scope = scope;
-        this.state = Math.random().toString(32).substr(2)
+        this.state = "99998888"
     }
 }
 //创建一个方法 生成url
@@ -214,6 +214,7 @@ const wechatCallBackCtr = (req, response) => {
             var result = buff.toString()
             result = JSON.parse(result);
             let { access_token, openid } = result.access_token
+            console.log(result)
             // response.send('success')
             // 第四步：拉取用户信息(需scope为 snsapi_userinfo)
             //https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
