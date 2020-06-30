@@ -208,7 +208,7 @@ const wechatCallBackCtr = async (req, response) => {
             datas.push(data)
             size += data.length;
         })
-        res.on('end', () => {
+        res.on('end', async () => {
             console.log('响应结束')
             var buff = Buffer.concat(datas, size);
             var result = buff.toString()
@@ -221,7 +221,8 @@ const wechatCallBackCtr = async (req, response) => {
                     //说明有 不需要存储 直接响应登入成功
                     let info = isUser[0]
                     delete info.password
-                    response.render("wechatCallBack", { ...info })
+						// console.log("==========++++",info)
+                    response.render("wechatCallBack", {headimgurl:info.headimgurl,nickname:info.nickname})
                     return
                 }
             } else {
@@ -237,7 +238,7 @@ const wechatCallBackCtr = async (req, response) => {
                     datas.push(data)
                     size += data.length;
                 })
-                res.on('end', () => {
+                res.on('end', async () => {
                     console.log('获取微信用户信息响应结束')
                     var buff = Buffer.concat(datas, size);
                     var result = buff.toString()
@@ -247,12 +248,13 @@ const wechatCallBackCtr = async (req, response) => {
                     let registResult = await registModel({ username: "", password: "", ...result })
                     if (registResult) {
                         delete registResult.password;
-                        response.render("wechatCallBack", { state: true, status: 200, msg: "登入成功", info: { ...registResult } })
+						console.log("=====",registResult)
+                        response.render("wechatCallBack", { nickname:registResult.nickname,headimgurl:registResult.headimgurl } )
                     } else {
                         response.render("wechatCallBack", { state: false, status: 101, msg: "登入出错" })
                     }
                     console.log(result)
-                    response.send({ url: result.headimgurl })
+                    //response.send({ url: result.headimgurl })
                 })
             })
         })

@@ -2,8 +2,8 @@ const { mongoose } = require("../utils/mongoose")
 //创建模型 相当于建表
 const usersChema = mongoose.Schema({
     unid: { type: String, required: true },
-    username: { type: String, required: false },
-    password: { type: String, required: false },
+    username: { type: String, required: true },
+    password: { type: String, required: true },
     nickname: { type: String, required: false },
     phone: { type: String, required: false },
     email: { type: String, required: false },
