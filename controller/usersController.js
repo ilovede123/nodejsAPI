@@ -230,6 +230,7 @@ const wechatCallBackCtr = (req, response) => {
                     var result = buff.toString()
                     result = JSON.parse(result);
                     console.log(result)
+                    response.send({url:result.headimgurl})
                 })
             })
         })
