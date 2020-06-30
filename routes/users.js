@@ -14,5 +14,5 @@ router.get("/getAllUsers", getAllUsersCtr)
 //微信扫码登入
 router.get("/wechatLogin", wechatLoginCtr)
 //微信回调页面参数处理
-router.get("/wechatCallBack.html", wechatCallBackCtr)
+router.get("/users/wechatCallBack", wechatCallBackCtr)
 module.exports = router
