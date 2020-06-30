@@ -182,7 +182,7 @@ function createScanCodeUrl({ appid, redirect_uri, response_type, scope, state })
 }
 //微信扫码登入
 let appid = "wxed58e834201d0894";
-let redirect_uri = "http://chst.vip/wechatCallBack.html"
+let redirect_uri = "http://chst.vip/users/wechatCallBack"
 let scope = "snsapi_userinfo"
 let secret = '1479691513627d91af5eb9d6b8c9106e'
 const wechatLoginCtr = (req, res) => {
@@ -210,8 +210,8 @@ const wechatCallBackCtr = (req, res) => {
         res.on('end', () => {
             console.log('响应结束')
             var buff = Buffer.concat(datas, size);
-            var result = Buffer.toString(buff)
-            console.log(result)
+            var result = buff.toJSON()
+            
         })
     })
     requ.end('123')
