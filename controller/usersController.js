@@ -197,7 +197,7 @@ const wechatLoginCtr = (req, res) => {
 }
 
 //处理微信回调页面控制层
-const wechatCallBackCtr = (req, res) => {
+const wechatCallBackCtr = (req, response) => {
     console.log(req.query)
     let { code } = req.query;//获取code之后去换access_token
 
@@ -213,7 +213,7 @@ const wechatCallBackCtr = (req, res) => {
             var buff = Buffer.concat(datas, size);
             var result = buff.toString()
             console.log(JSON.parse(result))
-            res.send('success')
+            response.send('success')
         })
     })
     requ.end('123')
