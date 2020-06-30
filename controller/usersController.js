@@ -213,8 +213,7 @@ const wechatCallBackCtr = (req, response) => {
             var buff = Buffer.concat(datas, size);
             var result = buff.toString()
             result = JSON.parse(result);
-            let { access_token, openid } = result.access_token
-            console.log(result)
+            let { access_token, openid } = result
             // response.send('success')
             // 第四步：拉取用户信息(需scope为 snsapi_userinfo)
             //https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
