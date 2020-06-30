@@ -173,7 +173,7 @@ class CreateScanCodeParams {
         this.redirect_uri = redirect_uri;
         this.response_type = response_type;
         this.scope = scope;
-        this.state = state
+        this.state = Math.random().toString(32).substr(2)
     }
 }
 //创建一个方法 生成url
@@ -201,7 +201,7 @@ const wechatCallBackCtr = (req, response) => {
     console.log(req.query)
     let { code } = req.query;//获取code之后去换access_token
 
-    let requ = https.get(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appid}&secret=${secret}&code=${code}&grant_type=authorization_code`, function (res) {
+    https.get(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appid}&secret=${secret}&code=${code}&grant_type=authorization_code`, function (res) {
         let datas = [];
         let size = 0;
         res.on('data', data => {
@@ -212,12 +212,28 @@ const wechatCallBackCtr = (req, response) => {
             console.log('响应结束')
             var buff = Buffer.concat(datas, size);
             var result = buff.toString()
-            console.log(JSON.parse(result))
-            response.send('success')
+            result = JSON.parse(result);
+            let { access_token, openid } = result.access_token
+            // response.send('success')
+            // 第四步：拉取用户信息(需scope为 snsapi_userinfo)
+            //https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
+            https.get(`https://api.weixin.qq.com/sns/userinfo?access_token=${access_token}&openid=${openid}&lang=zh_CN`, function (res) {
+                let datas = [];
+                let size = 0;
+                res.on('data', data => {
+                    datas.push(data)
+                    size += data.length;
+                })
+                res.on('end', () => {
+                    console.log('获取微信用户信息响应结束')
+                    var buff = Buffer.concat(datas, size);
+                    var result = buff.toString()
+                    result = JSON.parse(result);
+                    console.log(result)
+                })
+            })
         })
     })
-    requ.end('123')
-
 }
 module.exports = {
     registCtr,
